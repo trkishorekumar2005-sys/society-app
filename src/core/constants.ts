@@ -71,6 +71,7 @@ export interface EmergencyContact {
 export const StorageKey = {
   USERS: 'society_app:users',
   SESSION: 'society_app:session',
+  COMPLAINTS: 'society_app:complaints',
 } as const;
 export type StorageKey = (typeof StorageKey)[keyof typeof StorageKey];
 
