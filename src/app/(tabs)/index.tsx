@@ -1,30 +1,136 @@
-import { StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { useEffect } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { Chip, Text } from 'react-native-paper';
 
-import { EmptyState, ScreenContainer } from '@/components';
+import { Card, EmptyState, ErrorState, LoadingState, ScreenContainer } from '@/components';
+import { AnnouncementCategory } from '@/core/constants';
 import { Spacing } from '@/core/theme';
-import { useAuthUser } from '@/domain/store/authStore';
+import { formatDateTime } from '@/core/utils/date';
+import {
+  useAnnouncementsActions,
+  useAnnouncementsCategory,
+  useAnnouncementsData,
+  useAnnouncementsError,
+  useAnnouncementsStatus,
+} from '@/domain/store/announcementsStore';
+
+const CATEGORIES: { value: AnnouncementCategory; label: string }[] = [
+  { value: AnnouncementCategory.GENERAL, label: 'General' },
+  { value: AnnouncementCategory.MAINTENANCE, label: 'Maintenance' },
+  { value: AnnouncementCategory.EVENT, label: 'Event' },
+  { value: AnnouncementCategory.EMERGENCY, label: 'Emergency' },
+  { value: AnnouncementCategory.BILLING, label: 'Billing' },
+];
 
 export default function AnnouncementsScreen() {
-  const user = useAuthUser();
-  const firstName = user?.name.split(' ')[0];
+  const announcements = useAnnouncementsData();
+  const status = useAnnouncementsStatus();
+  const error = useAnnouncementsError();
+  const selectedCategory = useAnnouncementsCategory();
+  const { fetch, filterByCategory, retry } = useAnnouncementsActions();
+
+  const isLoading = status === 'loading';
+  const isError = status === 'error';
+  const isEmpty = announcements.length === 0 && status === 'success';
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
+  if (isLoading && announcements.length === 0) {
+    return <LoadingState message="Loading announcements…" />;
+  }
+
+  if (isError) {
+    return <ErrorState message={error || 'Failed to load announcements.'} onRetry={retry} />;
+  }
+
+  if (isEmpty) {
+    return <EmptyState icon="bullhorn-outline" title="No announcements" />;
+  }
 
   return (
-    <ScreenContainer>
-      <Text variant="headlineSmall" style={styles.greeting}>
-        Hi {firstName}
-      </Text>
-      <EmptyState
-        icon="bullhorn-outline"
-        title="Announcements coming soon"
-        description="Pinned notices and updates from your society admin will show up here."
+    <ScreenContainer scrollable={false} refreshing={isLoading} onRefresh={fetch}>
+      <View style={styles.categoryRow}>
+        <Chip
+          selected={!selectedCategory}
+          onPress={() => filterByCategory(null)}
+          style={styles.chip}
+          mode={!selectedCategory ? 'flat' : 'outlined'}>
+          All
+        </Chip>
+        {CATEGORIES.map((cat) => (
+          <Chip
+            key={cat.value}
+            selected={selectedCategory === cat.value}
+            onPress={() => filterByCategory(cat.value)}
+            style={styles.chip}
+            mode={selectedCategory === cat.value ? 'flat' : 'outlined'}>
+            {cat.label}
+          </Chip>
+        ))}
+      </View>
+
+      <FlatList
+        data={announcements}
+        keyExtractor={(item) => item.id}
+        scrollEnabled={false}
+        renderItem={({ item }) => (
+          <Card style={styles.announcementCard}>
+            <Card.Content>
+              <View style={styles.header}>
+                <Text variant="titleMedium" style={styles.title}>
+                  {item.title}
+                </Text>
+                {item.pinned && <Text style={styles.pinnedBadge}>📌</Text>}
+              </View>
+              <Text variant="bodySmall" style={styles.meta}>
+                {formatDateTime(item.createdAt)} • {item.createdByName}
+              </Text>
+              <Text variant="bodyMedium" style={styles.body}>
+                {item.body}
+              </Text>
+            </Card.Content>
+          </Card>
+        )}
       />
     </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  greeting: {
+  categoryRow: {
+    flexDirection: 'row',
+    gap: Spacing.one,
     marginBottom: Spacing.three,
+    paddingHorizontal: Spacing.three,
+    flexWrap: 'wrap',
+  },
+  chip: {
+    marginBottom: Spacing.one,
+  },
+  announcementCard: {
+    marginHorizontal: Spacing.three,
+    marginBottom: Spacing.two,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: Spacing.one,
+    gap: Spacing.one,
+  },
+  title: {
+    flex: 1,
+  },
+  pinnedBadge: {
+    fontSize: 16,
+  },
+  meta: {
+    opacity: 0.6,
+    marginBottom: Spacing.two,
+  },
+  body: {
+    lineHeight: 22,
   },
 });
