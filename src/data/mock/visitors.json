@@ -1,0 +1,44 @@
+[
+  {
+    "id": "vis_001",
+    "name": "Karan Singh",
+    "phone": "+91 99887 76655",
+    "purpose": "Furniture delivery",
+    "visitDate": "2026-09-12",
+    "passCode": "482913",
+    "status": "PENDING",
+    "residentId": "user_resident_001",
+    "residentName": "Rohan Mehta",
+    "flatNumber": "A-204",
+    "createdAt": "2026-09-10T14:00:00.000Z"
+  },
+  {
+    "id": "vis_002",
+    "name": "Neha Kapoor",
+    "phone": "+91 98123 45566",
+    "purpose": "Family visit",
+    "visitDate": "2026-09-08",
+    "passCode": "119284",
+    "status": "CHECKED_OUT",
+    "residentId": "user_resident_001",
+    "residentName": "Rohan Mehta",
+    "flatNumber": "A-204",
+    "checkInTime": "2026-09-08T16:05:00.000Z",
+    "checkOutTime": "2026-09-08T19:40:00.000Z",
+    "createdAt": "2026-09-08T09:30:00.000Z"
+  },
+  {
+    "id": "vis_003",
+    "name": "Ramesh Traders",
+    "phone": "+91 90011 22334",
+    "purpose": "Grocery delivery",
+    "visitDate": "2026-09-11",
+    "passCode": "607452",
+    "status": "CHECKED_IN",
+    "residentId": "user_resident_001",
+    "residentName": "Rohan Mehta",
+    "flatNumber": "A-204",
+    "checkInTime": "2026-09-11T13:15:00.000Z",
+    "createdAt": "2026-09-11T12:50:00.000Z"
+  }
+]

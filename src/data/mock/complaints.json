@@ -1,0 +1,53 @@
+[
+  {
+    "id": "cmp_001",
+    "title": "Leaking pipe in basement parking",
+    "category": "MAINTENANCE",
+    "description": "There is a continuous water leak near pillar B4 in the basement parking area.",
+    "priority": "HIGH",
+    "status": "IN_PROGRESS",
+    "raisedBy": "user_resident_001",
+    "raisedByName": "Rohan Mehta",
+    "flatNumber": "A-204",
+    "createdAt": "2026-09-03T07:45:00.000Z",
+    "updatedAt": "2026-09-04T11:20:00.000Z",
+    "statusHistory": [
+      { "status": "OPEN", "timestamp": "2026-09-03T07:45:00.000Z" },
+      { "status": "IN_PROGRESS", "timestamp": "2026-09-04T11:20:00.000Z", "note": "Plumber assigned, work in progress." }
+    ]
+  },
+  {
+    "id": "cmp_002",
+    "title": "Streetlight not working near Block C",
+    "category": "OTHER",
+    "description": "The streetlight near the Block C entrance has not been working for the past week.",
+    "priority": "MEDIUM",
+    "status": "OPEN",
+    "raisedBy": "user_resident_001",
+    "raisedByName": "Rohan Mehta",
+    "flatNumber": "A-204",
+    "createdAt": "2026-09-07T18:10:00.000Z",
+    "updatedAt": "2026-09-07T18:10:00.000Z",
+    "statusHistory": [
+      { "status": "OPEN", "timestamp": "2026-09-07T18:10:00.000Z" }
+    ]
+  },
+  {
+    "id": "cmp_003",
+    "title": "Loud music after quiet hours",
+    "category": "NOISE",
+    "description": "Loud music was played past 11 PM from flat B-302 for the third night in a row.",
+    "priority": "LOW",
+    "status": "RESOLVED",
+    "raisedBy": "user_resident_001",
+    "raisedByName": "Rohan Mehta",
+    "flatNumber": "A-204",
+    "createdAt": "2026-08-28T22:30:00.000Z",
+    "updatedAt": "2026-08-30T10:00:00.000Z",
+    "statusHistory": [
+      { "status": "OPEN", "timestamp": "2026-08-28T22:30:00.000Z" },
+      { "status": "IN_PROGRESS", "timestamp": "2026-08-29T09:15:00.000Z", "note": "Notice issued to the flat." },
+      { "status": "RESOLVED", "timestamp": "2026-08-30T10:00:00.000Z", "note": "Resident confirmed no further disturbance." }
+    ]
+  }
+]

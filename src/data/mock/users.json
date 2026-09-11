@@ -1,0 +1,32 @@
+[
+  {
+    "id": "user_admin_001",
+    "name": "Aditi Verma",
+    "email": "admin@demo.com",
+    "password": "123456",
+    "phone": "+91 98765 43210",
+    "role": "ADMIN",
+    "flatNumber": "Office",
+    "createdAt": "2026-01-05T09:00:00.000Z"
+  },
+  {
+    "id": "user_resident_001",
+    "name": "Rohan Mehta",
+    "email": "resident@demo.com",
+    "password": "123456",
+    "phone": "+91 91234 56780",
+    "role": "RESIDENT",
+    "flatNumber": "A-204",
+    "createdAt": "2026-01-10T09:00:00.000Z"
+  },
+  {
+    "id": "user_security_001",
+    "name": "Suresh Kumar",
+    "email": "security@demo.com",
+    "password": "123456",
+    "phone": "+91 90000 11122",
+    "role": "SECURITY",
+    "flatNumber": "Gate",
+    "createdAt": "2026-01-12T09:00:00.000Z"
+  }
+]

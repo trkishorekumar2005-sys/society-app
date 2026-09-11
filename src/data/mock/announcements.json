@@ -1,0 +1,42 @@
+[
+  {
+    "id": "ann_001",
+    "title": "Annual General Meeting - Sept 20",
+    "body": "All residents are invited to the AGM in the clubhouse at 6 PM to discuss the annual budget and upcoming maintenance work.",
+    "category": "GENERAL",
+    "pinned": true,
+    "createdBy": "user_admin_001",
+    "createdByName": "Aditi Verma",
+    "createdAt": "2026-09-01T10:00:00.000Z"
+  },
+  {
+    "id": "ann_002",
+    "title": "Water Supply Interruption",
+    "body": "Water supply will be interrupted on Sept 15 from 10 AM to 2 PM for overhead tank cleaning.",
+    "category": "MAINTENANCE",
+    "pinned": true,
+    "createdBy": "user_admin_001",
+    "createdByName": "Aditi Verma",
+    "createdAt": "2026-09-05T08:30:00.000Z"
+  },
+  {
+    "id": "ann_003",
+    "title": "Ganesh Chaturthi Celebration",
+    "body": "Join us for the Ganesh Chaturthi celebration at the community hall on Sept 14 from 6 PM. Snacks and refreshments will be provided.",
+    "category": "EVENT",
+    "pinned": false,
+    "createdBy": "user_admin_001",
+    "createdByName": "Aditi Verma",
+    "createdAt": "2026-09-06T12:00:00.000Z"
+  },
+  {
+    "id": "ann_004",
+    "title": "Maintenance Bill Due Reminder",
+    "body": "Monthly maintenance dues for September are due by Sept 10. Please pay via the society office to avoid late fees.",
+    "category": "BILLING",
+    "pinned": false,
+    "createdBy": "user_admin_001",
+    "createdByName": "Aditi Verma",
+    "createdAt": "2026-09-02T09:00:00.000Z"
+  }
+]
