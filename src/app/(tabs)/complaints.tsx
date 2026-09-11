@@ -6,6 +6,7 @@ import { AppButton, AppTextField, Card, EmptyState, ErrorState, LoadingState, Sc
 import { ComplaintCategory, ComplaintPriority, Role } from '@/core/constants';
 import { Spacing } from '@/core/theme';
 import { formatDateTime } from '@/core/utils/date';
+import { useResponsiveColumns } from '@/core/utils/responsive';
 import {
   getComplaintCategoryLabel,
   getComplaintPriorityLabel,
@@ -57,6 +58,7 @@ const initialForm: FormState = {
 
 export default function ComplaintsScreen() {
   const theme = useTheme();
+  const numColumns = useResponsiveColumns();
   const user = useAuthUser();
   const isAdmin = user?.role === Role.ADMIN;
 
@@ -145,15 +147,18 @@ export default function ComplaintsScreen() {
           />
         ) : (
           <FlatList
+            key={numColumns}
             data={complaints}
             keyExtractor={(item) => item.id}
             scrollEnabled={false}
+            numColumns={numColumns}
+            columnWrapperStyle={numColumns > 1 ? styles.columnWrapper : undefined}
             contentContainerStyle={styles.list}
             renderItem={({ item }) => {
               const isExpanded = expandedId === item.id;
               const nextStatus = getNextComplaintStatus(item.status);
               return (
-                <Card style={styles.card}>
+                <Card style={[styles.card, numColumns > 1 && styles.gridItem]}>
                   <Card.Content>
                     <View style={styles.headerRow}>
                       <Text variant="titleMedium" style={styles.title}>
@@ -297,8 +302,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
     paddingBottom: Spacing.six,
   },
+  columnWrapper: {
+    gap: Spacing.two,
+  },
   card: {
     marginBottom: Spacing.two,
+  },
+  gridItem: {
+    flex: 1,
   },
   headerRow: {
     flexDirection: 'row',

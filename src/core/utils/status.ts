@@ -88,3 +88,14 @@ export function getVisitorStatusTone(status: VisitorStatus): StatusTone {
       return 'neutral';
   }
 }
+
+const VISITOR_STATUS_LABELS: Record<VisitorStatus, string> = {
+  [VisitorStatus.PENDING]: 'Pending',
+  [VisitorStatus.CHECKED_IN]: 'Checked in',
+  [VisitorStatus.CHECKED_OUT]: 'Checked out',
+  [VisitorStatus.EXPIRED]: 'Expired',
+};
+
+export function getVisitorStatusLabel(status: VisitorStatus): string {
+  return VISITOR_STATUS_LABELS[status] ?? status;
+}

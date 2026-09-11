@@ -25,6 +25,12 @@ export interface RegisterInput {
   password: string;
 }
 
+export interface UpdateProfileInput {
+  name: string;
+  phone: string;
+  flatNumber: string;
+}
+
 function toPublicUser(storedUser: StoredUser): User {
   const { password: _password, ...user } = storedUser;
   return user;
@@ -70,6 +76,30 @@ export const authRepository = {
       await writeCollection(StorageKey.USERS, [...users, newUser]);
 
       const user = toPublicUser(newUser);
+      await AsyncStorage.setItem(StorageKey.SESSION, JSON.stringify(user));
+      return user;
+    });
+  },
+
+  async updateProfile(userId: string, input: UpdateProfileInput): Promise<User> {
+    return mockApiClient.call(async () => {
+      const users = await getStoredUsers();
+      const index = users.findIndex((candidate) => candidate.id === userId);
+      if (index === -1) {
+        throw new UnauthorizedError('Your session is no longer valid. Please log in again.');
+      }
+
+      const updated: StoredUser = {
+        ...users[index],
+        name: input.name,
+        phone: input.phone,
+        flatNumber: input.flatNumber,
+      };
+      const nextUsers = [...users];
+      nextUsers[index] = updated;
+      await writeCollection(StorageKey.USERS, nextUsers);
+
+      const user = toPublicUser(updated);
       await AsyncStorage.setItem(StorageKey.SESSION, JSON.stringify(user));
       return user;
     });

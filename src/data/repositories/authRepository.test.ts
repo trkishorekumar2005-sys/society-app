@@ -65,4 +65,18 @@ describe('authRepository', () => {
     const restored = await authRepository.restoreSession();
     expect(restored).toBeNull();
   });
+
+  it('updates the profile and persists the change to the session', async () => {
+    const user = await authRepository.login({ email: 'resident@demo.com', password: '123456' });
+    const updated = await authRepository.updateProfile(user.id, {
+      name: 'Rohan Updated',
+      phone: '+91 90000 09999',
+      flatNumber: 'A-999',
+    });
+    expect(updated.name).toBe('Rohan Updated');
+    expect(updated.flatNumber).toBe('A-999');
+
+    const restored = await authRepository.restoreSession();
+    expect(restored?.name).toBe('Rohan Updated');
+  });
 });

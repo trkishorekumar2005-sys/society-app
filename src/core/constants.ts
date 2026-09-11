@@ -72,6 +72,7 @@ export const StorageKey = {
   USERS: 'society_app:users',
   SESSION: 'society_app:session',
   COMPLAINTS: 'society_app:complaints',
+  VISITORS: 'society_app:visitors',
 } as const;
 export type StorageKey = (typeof StorageKey)[keyof typeof StorageKey];
 

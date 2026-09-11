@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { authRepository } from '@/data/repositories/authRepository';
-import type { LoginInput, RegisterInput } from '@/data/repositories/authRepository';
+import type { LoginInput, RegisterInput, UpdateProfileInput } from '@/data/repositories/authRepository';
 import { toErrorMessage } from '@/core/errors';
 import type { User } from '@/domain/models';
 
@@ -12,6 +12,7 @@ interface AuthActions {
   restoreSession: () => Promise<void>;
   login: (input: LoginInput) => Promise<boolean>;
   register: (input: RegisterInput) => Promise<boolean>;
+  updateProfile: (input: UpdateProfileInput) => Promise<boolean>;
   logout: () => Promise<void>;
   clearError: () => void;
 }
@@ -24,7 +25,7 @@ interface AuthState {
   actions: AuthActions;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   data: null,
   status: 'idle',
   error: null,
@@ -55,6 +56,21 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ status: 'loading', error: null });
       try {
         const user = await authRepository.register(input);
+        set({ data: user, status: 'success' });
+        return true;
+      } catch (error) {
+        set({ status: 'error', error: toErrorMessage(error) });
+        return false;
+      }
+    },
+
+    async updateProfile(input) {
+      const currentUser = get().data;
+      if (!currentUser) return false;
+
+      set({ status: 'loading', error: null });
+      try {
+        const user = await authRepository.updateProfile(currentUser.id, input);
         set({ data: user, status: 'success' });
         return true;
       } catch (error) {

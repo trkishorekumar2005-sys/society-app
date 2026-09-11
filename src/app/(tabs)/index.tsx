@@ -6,6 +6,7 @@ import { Card, EmptyState, ErrorState, LoadingState, ScreenContainer } from '@/c
 import { AnnouncementCategory } from '@/core/constants';
 import { Spacing } from '@/core/theme';
 import { formatDateTime } from '@/core/utils/date';
+import { useResponsiveColumns } from '@/core/utils/responsive';
 import {
   useAnnouncementsActions,
   useAnnouncementsCategory,
@@ -23,6 +24,7 @@ const CATEGORIES: { value: AnnouncementCategory; label: string }[] = [
 ];
 
 export default function AnnouncementsScreen() {
+  const numColumns = useResponsiveColumns();
   const announcements = useAnnouncementsData();
   const status = useAnnouncementsStatus();
   const error = useAnnouncementsError();
@@ -72,11 +74,15 @@ export default function AnnouncementsScreen() {
       </View>
 
       <FlatList
+        key={numColumns}
         data={announcements}
         keyExtractor={(item) => item.id}
         scrollEnabled={false}
+        numColumns={numColumns}
+        columnWrapperStyle={numColumns > 1 ? styles.columnWrapper : undefined}
+        contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <Card style={styles.announcementCard}>
+          <Card style={[styles.announcementCard, numColumns > 1 && styles.gridItem]}>
             <Card.Content>
               <View style={styles.header}>
                 <Text variant="titleMedium" style={styles.title}>
@@ -109,9 +115,18 @@ const styles = StyleSheet.create({
   chip: {
     marginBottom: Spacing.one,
   },
+  list: {
+    paddingHorizontal: Spacing.three,
+    paddingBottom: Spacing.six,
+  },
+  columnWrapper: {
+    gap: Spacing.two,
+  },
   announcementCard: {
-    marginHorizontal: Spacing.three,
     marginBottom: Spacing.two,
+  },
+  gridItem: {
+    flex: 1,
   },
   header: {
     flexDirection: 'row',
