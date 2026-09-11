@@ -68,6 +68,12 @@ export interface EmergencyContact {
   category: string;
 }
 
+export const StorageKey = {
+  USERS: 'society_app:users',
+  SESSION: 'society_app:session',
+} as const;
+export type StorageKey = (typeof StorageKey)[keyof typeof StorageKey];
+
 export const EMERGENCY_CONTACTS: EmergencyContact[] = [
   { id: 'ec_police', name: 'Police', phone: '100', category: 'Emergency' },
   { id: 'ec_fire', name: 'Fire Brigade', phone: '101', category: 'Emergency' },
